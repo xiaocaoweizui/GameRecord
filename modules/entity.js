@@ -1,0 +1,130 @@
+var cnn = require("./database.js");
+var format = require("./format.js");
+var _ = require("underscore");
+
+cnn.connect();
+var entity = {
+    primaryKey: "",
+    tableName: "",
+    columns: [],
+    getColumnsStr: function () {
+        return this.columns.toString(',');
+    },
+    getPageSQL:function(sql,params){
+        let isPage=(params.pageNum>0);
+        //默认分页15条数据每页
+        let pageCount=params.pageCount!=undefined?params.pageCount:15;
+
+        if(isPage){
+            let startPageNum=pageCount *(params.pageNum-1) -0;
+            //let endPageNum=pageCount *params.pageNum -0;
+            let pageSQL= ` limit ${startPageNum}, ${pageCount}`;
+
+            sql+= pageSQL;
+        }
+       
+        return sql;
+    },
+    getTotalCount:function(req, res, params){
+        let me = this;
+        let where=params.where??"";
+        let querySQL = `Select COUNT(1) as totalcount from ${me.tableName}  ${where}`;
+
+        cnn.query(querySQL, function (err, result) {
+            format.returnJson(res, err, result[0]);
+        })
+    },
+    query: function (req, res, next) {
+        let me = this;
+        let id=req.query[me.primaryKey];
+        let querySQL = `Select ${me.getColumnsStr()} from ${me.tableName}  where ${me.primaryKey}='${id}'  `;
+        // console.log(querySQL);
+        cnn.query(querySQL, function (err, result) {
+            format.returnJson(res, err, result[0]);
+        })
+    },
+    queryWhere: function ( res,next, params) {
+        /**
+         * params:{
+         * where: ""
+         * ordeby:"" 
+         * pageCount:"" --分页每页数量
+         * pageNum:"" --第几页
+         * }
+         */
+        let me=this;
+        let where=params.where??"";
+        let querySQL = `Select ${this.getColumnsStr()} from ${me.tableName}  ${where}`;
+        
+        querySQL=this.getPageSQL(querySQL,params);
+       
+        cnn.query(querySQL, function (err, result) {
+            let data=result!=undefined?result[0]:{};
+            format.returnJson(res, err, data);
+        })
+    },
+    queryWhereAndOrderBy: function ( res, next,params) {
+        var me = this;
+        var orderBy = params.orderBy == undefined ? "" : params.orderBy;
+        var where = params.where == undefined ? "" : params.where;
+        let querySQL = `Select ${me.getColumnsStr()} from ${me.tableName} ${where} ${orderBy} `;
+        querySQL=this.getPageSQL(querySQL,params);
+     
+        cnn.query(querySQL, function (err, result) {
+            next(result);
+            console.log(result);
+            format.returnJson(res, err, result);
+        })
+    },
+    update: function (req, res, next) {
+        var me = this;
+        var sql = "";
+        _.each(me.columns, col => {
+           // console.log(`${col} , ${req.body[col]}`);
+            if (col != me.primaryKey && req.body[col] !== undefined) {
+                if (sql != "") {
+                    sql += ","
+                }
+                if(req.body[col]===null){
+                    sql += col + "=null";
+                }else{
+                    sql += col + "='" + req.body[col] +"'";
+                }
+               // console.log(req.body[col]);
+            }
+        })
+        var key = req.body[this.primaryKey];
+        var updateSQL = `update ${me.tableName} set ${sql} where ${me.primaryKey}='${key}'`;
+        console.log(updateSQL);
+        cnn.query(updateSQL, [], function (err, result) {
+            format.returnJson(res, err, result);
+        })
+    },
+    insert: function (req, res, next) {
+        var me = this;
+        var sql = "";
+        var valSQL = "";
+        _.each(me.columns, col => {
+            if (col != this.primaryKey && req.body[col] != undefined) {
+                sql += "," + col;
+                valSQL += ",'" + req.body[col] + "'";
+            }
+        })
+
+        var insertSQL = `insert into ${me.tableName}(${me.primaryKey} ${sql}) values( UUID() ${valSQL})`;
+        cnn.query(insertSQL, [], function (err, result) {
+            format.returnJson(res, err, result);
+        })
+    },
+    del: function (req, res, next) {
+        var me = this;
+        var id = req.query[me.primaryKey];
+        var sql = `delete from ${me.tableName} where ${me.primaryKey}='${id}'`;
+        cnn.query(sql, [], function (err, result) {
+            format.returnJson(res, err, result);
+        })
+
+    }
+}
+// cnn.end();
+module.exports = entity;
