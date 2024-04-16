@@ -14,6 +14,9 @@ router.get('/query', function(req, res, next) {
 router.get('/queryAll', function(req, res, next) {
   en.queryAll(req, res, next);
 });
-
+//http://localhost:3000/person/save
+router.post('/save', function(req, res, next) {
+  en.saveChanges(req, res, next);
+});
 
 module.exports = router;

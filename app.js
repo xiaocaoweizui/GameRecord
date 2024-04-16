@@ -10,6 +10,7 @@ var recordRouter = require('./routes/record');
 var targetRouter = require('./routes/target');
 var personRouter = require('./routes/person');
 var liferecordRouter = require('./routes/liferecord');
+var worktodoRouter = require('./routes/worktodo');
 var app = express();
 
 // view engine setup
@@ -28,6 +29,7 @@ app.use('/record', recordRouter);
 app.use('/target', targetRouter);
 app.use('/person', personRouter);
 app.use('/liferecord', liferecordRouter);
+app.use('/worktodo', worktodoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

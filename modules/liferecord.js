@@ -60,7 +60,10 @@ var recordEntity = function () {
             let me = this;
             let startDate = req.query.startDate;
             let endDate = req.query.endDate;
-            let querySQL = `  where DateDiff(record_time,'${startDate}')>=0  and DateDiff(record_time,'${endDate}')<=0  `;
+            let querySQL = `  where DateDiff(record_time,'${startDate}')>=0 `;
+            if(endDate!=null && endDate!=""){
+                querySQL +=` and DateDiff(record_time,'${endDate}')<=0  `;
+            }
             let params = {
                 where: querySQL
             };

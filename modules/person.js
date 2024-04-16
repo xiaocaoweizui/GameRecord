@@ -17,7 +17,6 @@ var personEntity = function () {
     //继承必须采用深度复制的方式
     var en= format.deepCopy(entity);
     Object.assign(en, params)
-    // console.log(en);
     return en;
 }
 // cnn.end();
