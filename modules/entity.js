@@ -17,7 +17,6 @@ var entity = {
 
         if (isPage) {
             let startPageNum = pageCount * (params.pageNum - 1) - 0;
-            //let endPageNum=pageCount *params.pageNum -0;
             let pageSQL = ` limit ${startPageNum}, ${pageCount}`;
 
             sql += pageSQL;
@@ -41,7 +40,6 @@ var entity = {
         let querySQL = `Select ${me.getColumnsStr()}
                         from ${me.tableName}
                         where ${me.primaryKey} = '${id}'  `;
-        // console.log(querySQL);
         cnn.query(querySQL, function (err, result) {
             format.returnJson(res, err, result[0]);
         })
