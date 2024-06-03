@@ -171,7 +171,13 @@ var entity = {
                    values (UUID(), ${valSQL})`;
         }
 
-        console.log(sql);
+        // 后续考虑事务
+        // cnn.beginTransaction((err)=>{
+        //     if(err){
+        //         cnn.rollback();
+        //         return;
+        //     }
+        // })
         cnn.query(sql, [], function (err, result) {
             format.returnJson(res, err, result);
         })

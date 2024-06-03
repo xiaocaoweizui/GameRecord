@@ -8,7 +8,7 @@ var targetEntity = function () {
     var params = {
         primaryKey: "id",
         tableName: "g_target",
-        columns: ["id", "target", "start_time","type", "end_time", "status", "amount","remark"],
+        columns: ["id", "target", "start_time","type", "end_time", "status", "amount","remark","unit"],
         queryAll: function (req, res, next) {
             var me=this;
             var isDesc = req.query.isDesc;
@@ -26,7 +26,6 @@ var targetEntity = function () {
             }else if(types!=null){
                 whereSQL= "  where type in ('"+ types.replace(/\,/g,"','") +"')";
             }
-            console.log(types)
             let params={
                 orderBy: querySQL,
                 where: whereSQL,

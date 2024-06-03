@@ -8,7 +8,7 @@ var recordEntity = function () {
     var params = {
         primaryKey: "id",
         tableName: "life_record",
-        columns: ["id", "cur_amount", "record_time", "target_amount", "title","person_id", "remark", "person_name","target_amount"],
+        columns: ["id", "cur_amount", "record_time", "target_amount", "title","person_id", "remark", "person_name"],
         search: function (req, res, next) {
             var me = this;
             var isDesc = req.query.isDesc;
