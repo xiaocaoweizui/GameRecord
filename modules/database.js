@@ -9,12 +9,12 @@ var connection = mysql.createConnection({
 });
 
 // 确保在程序退出时关闭连接池
-process.on('exit', () => {
-  pool.end((err) => {
-    if (err) console.error('Error closing connection pool:', err);
-    else console.log('Connection pool closed successfully.');
-  });
-});
+// process.on('exit', () => {
+//   pool.end((err) => {
+//     if (err) console.error('Error closing connection pool:', err);
+//     else console.log('Connection pool closed successfully.');
+//   });
+// });
 
 /*
 * 参数化查询

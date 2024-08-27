@@ -73,7 +73,7 @@ var entity = {
                         from ${me.tableName} ${where} ${orderBy} `;
         querySQL = this.getPageSQL(querySQL, params);
 
-       console.log(querySQL)
+        console.log(querySQL)
         cnn.query(querySQL, function (err, result) {
             next(result);
             // console.log(result);

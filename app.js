@@ -38,13 +38,10 @@ app.use(function (req, res, next){
     }
     myJwt.jwt.verify(token,myJwt.SECRET_KEY,(err,decode)=>{
       if (err) {
-        return res.status(401).send({
-          code: 401,
-          msg: err
-        })
+        //授权验证失败后，重新引导到登录页面
+        return res.redirect(301,"/login");
       } else {
         req.user = decode;
-       // console.log(decode);
         next();
       }
     });

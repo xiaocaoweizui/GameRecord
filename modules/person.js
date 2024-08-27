@@ -17,17 +17,29 @@ var personEntity = function () {
         login: function (req, res, next) {
             var code=req.body["code"];
             var password=req.body["password"];
-            var sql=`select count(1) from life_person where name='${code}' and password='${password}'`;
+
+            var sql=`select count(1) as data from life_person where code='${code}' and password='${password}'`;
+            console.log(sql);
             cnn.query(sql, [], function (err, result) {
-                var payload={
-                    code:code,
-                    password:password
-                };
-                res.send({
-                    code:200,
-                    message:"success",
-                    token:myJwt.generateToken(payload)
-                })
+                console.log(result[0].data)
+                if(result[0].data==1){
+                    var payload={
+                        code:code,
+                        password:password
+                    };
+                    res.send({
+                        code:200,
+                        message:"success",
+                        token:myJwt.generateToken(payload)
+                    })
+                }else{
+                     res.send({
+                        code: 200,
+                        message:"fail",
+                        msg: '账户密码错误！'
+                    })
+                }
+
             })
 
 
