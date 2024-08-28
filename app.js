@@ -25,12 +25,13 @@ app.use(express.urlencoded({ extended: false }));
 
 //鉴权验证
 app.use(function (req, res, next){
-  console.log(req.url);
+  // console.log(req.url);
   if(req.url.indexOf('/login')==-1) {
     let token = req.headers['authorization'];
-    console.log(token);
+    // console.log(token);
     if (!token) {
       // 提示 401 访问被拒绝
+      // return res.redirect(301,"/");
       return res.status(401).send({
         code: 401,
         msg: 'token is null'
@@ -38,8 +39,12 @@ app.use(function (req, res, next){
     }
     myJwt.jwt.verify(token,myJwt.SECRET_KEY,(err,decode)=>{
       if (err) {
-        //授权验证失败后，重新引导到登录页面
-        return res.redirect(301,"/login");
+
+        console.log(err)
+        return res.status(401).send({
+          code: 401,
+          msg: 'token is incorrent!'
+        })
       } else {
         req.user = decode;
         next();
