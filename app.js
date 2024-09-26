@@ -28,7 +28,7 @@ app.use(function (req, res, next){
   // console.log(req.url);
   if(req.url.indexOf('/login')==-1) {
     let token = req.headers['authorization'];
-    // console.log(token);
+     console.log(token);
     if (!token) {
       // 提示 401 访问被拒绝
       // return res.redirect(301,"/");

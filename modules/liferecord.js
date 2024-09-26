@@ -8,14 +8,15 @@ var recordEntity = function () {
     var params = {
         primaryKey: "id",
         tableName: "life_record",
-        columns: ["id", "cur_amount", "record_time", "target_amount", "title","person_id", "remark", "person_name"],
+        columns: ["id", "cur_amount", "record_time", "target_amount", "title","person_id", "remark", "person_name","target_id"],
         search: function (req, res, next) {
             var me = this;
             var isDesc = req.query.isDesc;
             let startDate = req.query.startDate;
             let endDate = req.query.endDate;
             let pageNum = req.query.page ?? 0;
-            let querySQL = `  where DateDiff(record_time,'${startDate}')>=0    `;
+            let targetId=req.query.targetId;
+            let querySQL = `  where target_id='${targetId}' and DateDiff(record_time,'${startDate}')>=0    `;
             if (endDate != "") {
                 querySQL += ` and DateDiff(record_time,'${endDate}')<=0`;
             }
