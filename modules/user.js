@@ -11,7 +11,7 @@ var userEntity = function () {
         columns: ["id", "user_id", "user_level", "school", "logoUrl", "sex", "role_model", "remark"],
         queryAll: function (req, res, next) {
             var me=this;
-            me.queryWhereAndOrderBy(res, o => { }, {})
+            me.queryWhereAndOrderBy(res, null, {})
         },
     };
     //继承必须采用深度复制的方式

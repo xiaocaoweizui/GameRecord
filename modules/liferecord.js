@@ -29,7 +29,7 @@ var recordEntity = function () {
                 where: querySQL,
                 pageNum: pageNum - 0
             };
-            me.queryWhereAndOrderBy(res, function (result) {}, params);
+            me.queryWhereAndOrderBy(res, null, params);
         },
         queryByDate: function (req, res, next) {
             var me = this;
@@ -55,7 +55,7 @@ var recordEntity = function () {
                 orderBy: querySQL,
                 pageNum: pageNum - 0
             }
-            me.queryWhereAndOrderBy(res, function (result) {}, params)
+            me.queryWhereAndOrderBy(res,null, params)
         },
         getTotalCountByDate: function (req, res, next) {
             let me = this;

@@ -33,6 +33,7 @@ var recordEntity = function () {
                 _.each(result, function (item) {
                     item.weekRange = format.getWeekRange(item.record_time);
                 })
+                format.returnJson(res, null, result);
             }, params);
         },
         queryByDate: function (req, res, next) {
@@ -63,6 +64,7 @@ var recordEntity = function () {
                 _.each(result, function (item) {
                     item.weekRange = format.getWeekRange(item.record_time);
                 })
+                format.returnJson(res, null, result);
             }, params)
         },
         getTotalCountByDate: function (req, res, next) {

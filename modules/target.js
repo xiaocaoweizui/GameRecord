@@ -31,7 +31,7 @@ var targetEntity = function () {
                 where: whereSQL,
                 pageNum:pageNum-0
             }
-            me.queryWhereAndOrderBy( res, function () {},params)
+            me.queryWhereAndOrderBy( res, null,params)
         }
        
     };

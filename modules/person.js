@@ -12,7 +12,7 @@ var personEntity = function () {
         columns: ["id", "name",  "logoUrl", "sex", "remark","password","code"],
         queryAll: function (req, res, next) {
             var me=this;
-            me.queryWhereAndOrderBy(res, o => { }, {})
+            me.queryWhereAndOrderBy(res, null, {})
         },
         login: function (req, res, next) {
             var code=req.body["code"];

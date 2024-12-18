@@ -5,7 +5,7 @@ var router = express.Router();
 
 //http://localhost:3000/worktodo/query?month=11
 router.get('/query', function(req, res, next) {
-  en.query(req, res, next);
+  en.query(req, res, null);
 });
 
 

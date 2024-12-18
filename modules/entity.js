@@ -41,7 +41,12 @@ var entity = {
                         from ${me.tableName}
                         where ${me.primaryKey} = '${id}'  `;
         cnn.query(querySQL, function (err, result) {
-            format.returnJson(res, err, result[0]);
+            console.log(typeof(next))
+           if(typeof(next)=="function"){
+               next(result[0]);
+           }else{
+               format.returnJson(res, err, result[0]);
+           }
         })
     },
     queryWhere: function (res, next, params) {
@@ -63,6 +68,7 @@ var entity = {
         cnn.query(querySQL, function (err, result) {
             let data = result != undefined ? result[0] : {};
             format.returnJson(res, err, data);
+            next(data);
         })
     },
     queryWhereAndOrderBy: function (res, next, params) {
@@ -75,9 +81,14 @@ var entity = {
 
         console.log(querySQL)
         cnn.query(querySQL, function (err, result) {
-            next(result);
-            // console.log(result);
-            format.returnJson(res, err, result);
+
+            console.log(typeof(next))
+            if(typeof(next)=="function"){
+                next(result);
+            }else{
+                format.returnJson(res, err, result);
+            }
+
         })
     },
     update: function (req, res, next) {

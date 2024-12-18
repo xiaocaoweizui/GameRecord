@@ -21,9 +21,7 @@ var worktodoEntity = function () {
                 where: querySQL
             }
 
-            me.queryWhereAndOrderBy(res, function (result) {
-
-            }, params)
+            me.queryWhereAndOrderBy(res, null, params)
         },
         delete:function(req,res,next){
             var me = this;
