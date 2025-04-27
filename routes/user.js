@@ -14,7 +14,7 @@ router.get('/test2', function(req, res, next) {
 
 //http://localhost:3000/user/query?id=11
 router.get('/query', function(req, res, next) {
-  en.query(req, res, next);
+  en.query(req, res, null);
 });
 
 //http://localhost:3000/user/queryAll

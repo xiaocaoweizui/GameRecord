@@ -40,8 +40,9 @@ var entity = {
         let querySQL = `Select ${me.getColumnsStr()}
                         from ${me.tableName}
                         where ${me.primaryKey} = '${id}'  `;
+        console.log(querySQL);
         cnn.query(querySQL, function (err, result) {
-            console.log(typeof(next))
+
            if(typeof(next)=="function"){
                next(result[0]);
            }else{
