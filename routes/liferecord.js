@@ -11,7 +11,7 @@ router.get('/queryAll', function(req, res, next) {
 
 //http://localhost:3000/liferecord/query?id=11
 router.get('/query', function(req, res, next) {
-  entity.query(req, res, next);
+  entity.query(req, res, null);
 });
 
 //http://localhost:3000/liferecord/getTotalCount

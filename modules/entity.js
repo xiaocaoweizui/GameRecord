@@ -43,7 +43,7 @@ var entity = {
         console.log(querySQL);
         cnn.query(querySQL, function (err, result) {
 
-           if(typeof(next)=="function"){
+           if( typeof(next)=="function"){
                next(result[0]);
            }else{
                format.returnJson(res, err, result[0]);
