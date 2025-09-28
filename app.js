@@ -13,6 +13,7 @@ var personRouter = require('./routes/person');
 var liferecordRouter = require('./routes/liferecord');
 var worktodoRouter = require('./routes/worktodo');
 var poemsRouter = require('./routes/poems');
+var labelRouter = require('./routes/daylabel');
 var app = express();
 
 // view engine setup
@@ -67,7 +68,8 @@ app.use('/target', targetRouter);
 app.use('/person', personRouter);
 app.use('/liferecord', liferecordRouter);
 app.use('/worktodo', worktodoRouter);
-app.use('/poems',poemsRouter );
+app.use('/poems',poemsRouter )
+app.use('/daylabel',labelRouter );
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
